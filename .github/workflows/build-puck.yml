@@ -24,6 +24,7 @@ jobs:
         run: |
           rm -rf $THEOS/sdks
           git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
+          echo "已下载的 SDK："
           ls $THEOS/sdks | grep iPhoneOS
 
       - name: 克隆 Puck 源码
@@ -32,6 +33,7 @@ jobs:
       - name: 编译 Puck
         run: |
           cd Puck
+          sed -i 's/iPhoneOS14.4.sdk/iPhoneOS14.5.sdk/g' Makefile
           make clean package FINALPACKAGE=1
 
       - name: 上传 deb 文件
