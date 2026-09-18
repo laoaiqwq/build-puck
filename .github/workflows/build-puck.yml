@@ -20,12 +20,16 @@ jobs:
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
           echo "$HOME/theos/bin" >> $GITHUB_PATH
 
-      - name: 下载 iOS SDK
+      - name: 下载 iOS SDK 并创建嵌套路径
         run: |
           rm -rf $THEOS/sdks
           git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
           echo "已下载的 SDK："
           ls $THEOS/sdks | grep iPhoneOS
+          mkdir -p $THEOS/sdks/iOS/14
+          ln -sf $THEOS/sdks/iPhoneOS14.5.sdk $THEOS/sdks/iOS/14/iPhoneOS14.5.sdk
+          echo "嵌套路径已创建："
+          ls -l $THEOS/sdks/iOS/14/
 
       - name: 克隆 Puck 源码
         run: git clone --recursive https://github.com/LittenArchive/Puck.git
