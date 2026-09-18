@@ -20,8 +20,14 @@ jobs:
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
           echo "$HOME/theos/bin" >> $GITHUB_PATH
 
+      - name: 下载 iOS SDK
+        run: |
+          rm -rf $THEOS/sdks
+          git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
+          ls $THEOS/sdks | grep iPhoneOS
+
       - name: 克隆 Puck 源码
-        run: git clone https://github.com/LittenArchive/Puck.git
+        run: git clone --recursive https://github.com/LittenArchive/Puck.git
 
       - name: 编译 Puck
         run: |
